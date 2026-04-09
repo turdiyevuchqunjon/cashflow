@@ -1,65 +1,69 @@
-import Image from "next/image";
+import { Suspense } from 'react';
+import Image from 'next/image';
+import LeadForm from '@/components/LeadForm';
+
+// Ochiq fonda ishlatiladigan oltin gradient (matnlar uchun)
+const goldTextGradient = "linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #B8860B 100%)";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    // Saytning umumiy foni oq (#FFFFFF) yoki juda mayin kulrang (#F9FAFB) qilinadi
+    <main className="min-h-screen bg-[#FAFAFA] text-[#111111] pb-8 selection:bg-[#D4AF37]/30 selection:text-black">
+      
+      {/* 1. Logotip (Oq fonda ham yaxshi ko'rinishi uchun) */}
+      <header className="pt-6 pb-6 flex justify-center">
+        <div className="relative group">
+          <Image 
+            src="/logo2.png" // Agar logotipingiz faqat qora fonda ishlasa, logotipni o'zgartirishingizga to'g'ri kelishi mumkin
+            alt="Cashflow Logo" 
+            width={170} 
+            height={170} 
+            className="relative drop-shadow-md"
+            priority
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </header>
+
+      {/* 2. Matnlar qismi (Oq fon uchun to'q matnlar) */}
+      <section className="max-w-4xl mx-auto px-6 text-center mb-16 space-y-6">
+        <p className="text-[#B8860B] tracking-[0.4em] uppercase text-xs font-bold opacity-90">
+          Eksklyuziv Moliya Tizimi
+        </p>
+        
+        <h1 className="text-5xl md:text-7xl font-900 tracking-tighter leading-none text-[#0A0A0A]">
+          CASHFLOW <br />
+          <span 
+            className="text-transparent bg-clip-text"
+            style={{ backgroundImage: goldTextGradient }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            STRATEGIYASI
+          </span>
+        </h1>
+
+        <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto font-400 leading-relaxed">
+          Kapitalingizni professional darajada boshqarish va har bir investitsiyadan maksimal foyda olishni o&apos;rganing.
+        </p>
+      </section>
+
+
+      {/* 4. Forma qismi (Asosiy urg'u berilgan blok) */}
+      <section id="register" className="max-w-xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-800 tracking-tight text-[#111111]">Ro&apos;yxatdan o&apos;tish</h2>
+          <p className="text-gray-500 mt-2">Ma&apos;lumotlaringizni qoldiring, biz tez orada bog&apos;lanamiz.</p>
         </div>
-      </main>
-    </div>
+
+        <Suspense fallback={<div className="text-center text-[#D4AF37] py-20">Yuklanmoqda...</div>}>
+          <LeadForm />
+        </Suspense>
+      </section>
+
+      {/* Footer */}
+      <footer className="mt-32 py-10 text-center border-t border-gray-200">
+        <p className="text-gray-400 text-xs uppercase tracking-[0.3em] font-medium">
+          © 2026 Vision Group. Barcha huquqlar himoyalangan.
+        </p>
+      </footer>
+    </main>
   );
 }
